@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\HTTP\Response;
 
-class RandomUserController extends BaseController
+class UserController extends BaseController
 {
 
     /** 
@@ -30,18 +30,18 @@ class RandomUserController extends BaseController
     {
         // creating a curl request an assign it to the client @var
         $client = \Config\Services::curlrequest();
-        
+
         // getting from the env configuration api url for security reasons
         $uri = getenv('API_EXTERNAL_URI') . '/api/?results=' . $default_users;
-        
+
         // stablishing the method and uri request   
         $response = $client->request('GET', $uri);
 
         // asigning the body request random call to @var users
-        $users = json_decode(json_decode($response->getJSON())); 
+        $users = json_decode(json_decode($response->getJSON()));
 
         return $users->results;
-    } 
+    }
 
     /** 
      * @return JSON<Response>

@@ -1,12 +1,55 @@
 {
-  "name": "server",
+  "name": "swapi-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Challenge test with random api & swapi api.",
+  "main": "./src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development nodemon ./src/app.js",
+    "format": "prettier --write 'src/**/*.js'",
+    "docs": "jsdoc -c jsdoc.json",
+    "start": "cross-env NODE_ENV=production node ./src/app.js",
+    "test": "cross-env NODE_ENV=test mocha ./test/app --exit",
+    "deploy:pm2": "pm2 start ecosystem.config.yml --env production",
+    "stop:pm2": "pm2 stop SwapiChallenge_api",
+    "log:pm2": "pm2 logs SwapiChallenge_api",
+    "restart:pm2": "pm2 restart SwapiChallenge_api",
+    "save:pm2": "pm2 save",
+    "monit:pm2": "pm2 monit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "private": true,
+  "keywords": [
+    "pm2",
+    "node",
+    "express"
+  ],
+  "repository": "https://github.com/sjosuerojas/swapi-rest-proof.git",
+  "author": "Josue Rojas. <sjosuerojasc@gmail.com>",
+  "contributors": [
+    "Josue Rojas <sjosuerojasc@gmail.com>"
+  ],
+  "homepage": "https://sjosuerojas.github.io/cv-sylvester-josue-rojas/",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jsdoc": "^3.6.7",
+    "mocha": "^9.0.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.1",
+    "supertest": "^6.1.3"
+  },
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "helmet": "^4.6.0",
+    "morgan": "^1.10.0",
+    "winston": "^3.3.3"
+  },
+  "engines": {
+    "node": ">= 14.15.1",
+    "npm": ">= 6.14.8"
+  }
 }

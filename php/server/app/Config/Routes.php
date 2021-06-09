@@ -18,7 +18,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('RandomUserController');
+$routes->setDefaultController('UserController');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -32,7 +32,7 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'RandomUserController::index');
+$routes->get('/', 'UserController::index');
 
 /*
  * --------------------------------------------------------------------
@@ -61,6 +61,6 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 
 $routes->options('(:any)', 'BaseController::cors');
 
-$routes->get('api/users/get-all', 'RandomUserController::fetchAndOrder');
-$routes->get('api/user/get-age/(:num)', 'RandomUserController::fetchAndFind/$1');
-$routes->get('api/users/get-repeated-letter', 'RandomUserController::fetchAndCount');
+$routes->get('api/users/get-all', 'UserController::fetchAndOrder');
+$routes->get('api/user/get-age/(:num)', 'UserController::fetchAndFind/$1');
+$routes->get('api/users/get-repeated-letter', 'UserController::fetchAndCount');

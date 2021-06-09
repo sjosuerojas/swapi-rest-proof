@@ -1,0 +1,22 @@
+apps:
+  - script: ./src/app.js
+    name: 'SwapiChallenge_api'
+    instances: 1
+    watch: false
+    max_memory_restart: '1G'
+    env:
+      NODE_PATH: src/
+    env_production:
+      APP_PORT: 5501
+      APP_ALLOW_DOMAINS: 'http://localhost:3000'
+      APP_LOG_LEVEL: 'info'
+      APP_LOG_FILENAME: 'logs/app.log'
+      APP_LOG_HANDLEEXCEPTIONS: true
+      APP_LOG_JSON: true
+      APP_LOG_MAXSIZE: 5242880
+      APP_LOG_MAXFILES: 5
+      APP_LOG_COLORIZE: false
+      APP_CONSOLE_LOG_LEVEL: 'debug'
+      APP_CONSOLE_LOG_HANDLEEXCEPTIONS: true
+      APP_CONSOLE_LOG_JSON: false
+      APP_CONSOLE_LOG_COLORIZE: true
