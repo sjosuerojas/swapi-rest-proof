@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Libraries\CodeIgniterCORS\CodeIgniterCORS;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -49,6 +50,23 @@ class BaseController extends Controller
 	{
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
+
+		if (!is_cli()) {
+			$this->_cors();
+		}
+	}
+
+	private function _cors(): void
+	{
+		if (
+			empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
+			(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+				(strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST'))
+		) {
+			// Use CI headers management and send headers 
+			$ciCORS = new CodeIgniterCORS();
+			$ciCORS->handle($this->request, $this->response);
+		}
 	}
 
 	public function getResponse(

@@ -18,7 +18,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('RandomUserController');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -32,7 +32,7 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'RandomUserController::index');
 
 /*
  * --------------------------------------------------------------------
@@ -51,6 +51,15 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+
+/**
+ * --------------------------------------------------------------------
+ * Custom Routes
+ * --------------------------------------------------------------------
+ * 
+ */
+
+$routes->options('(:any)', 'BaseController::cors');
 
 $routes->get('api/users/get-all', 'RandomUserController::fetchAndOrder');
 $routes->get('api/user/get-age/(:num)', 'RandomUserController::fetchAndFind/$1');

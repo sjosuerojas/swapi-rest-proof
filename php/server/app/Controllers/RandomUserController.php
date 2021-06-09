@@ -7,30 +7,10 @@ use CodeIgniter\HTTP\Response;
 class RandomUserController extends BaseController
 {
 
-    /**
-     * @param default_users default 10 users
-     */
-    private function fetchApi($default_users = 10)
-    {
-        // creating a curl request an assign it to the client @var
-        $client = \Config\Services::curlrequest();
-
-        // getting from the env configuration api url for security reasons
-        $uri = getenv('API_EXTERNAL_URI') . '/api/?results=' . $default_users;
-
-        // stablishing the method and uri request
-        $response = $client->request('GET', $uri);
-
-        // asigning the body request random call to @var users
-        $users = json_decode($response->getBody());
-
-        return $users->results;
-    }
-
     /** 
      * @return JSON<Response>
      */
-    public function fetchAll()
+    public function index()
     {
         $users = $this->fetchApi(25);
 
@@ -42,6 +22,26 @@ class RandomUserController extends BaseController
             ],
         ]);
     }
+
+    /**
+     * @param default_users default 10 users
+     */
+    private function fetchApi($default_users = 10)
+    {
+        // creating a curl request an assign it to the client @var
+        $client = \Config\Services::curlrequest();
+        
+        // getting from the env configuration api url for security reasons
+        $uri = getenv('API_EXTERNAL_URI') . '/api/?results=' . $default_users;
+        
+        // stablishing the method and uri request   
+        $response = $client->request('GET', $uri);
+
+        // asigning the body request random call to @var users
+        $users = json_decode(json_decode($response->getJSON())); 
+
+        return $users->results;
+    } 
 
     /** 
      * @return JSON<Response>
