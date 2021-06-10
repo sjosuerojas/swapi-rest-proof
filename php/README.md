@@ -15,6 +15,17 @@ composer install
 The quickest way to get started with the project API Swapi is creating a .env file which contains configuration options and server options.
 
 ```
+$ touch .env
+
+$ nano .env
+
+#Add this lines to .env file
+CI_ENVIRONMENT = development
+API_EXTERNAL_URI = https://randomuser.me
+```
+
+
+```
 php spark serve --port 5001
 ```
 
