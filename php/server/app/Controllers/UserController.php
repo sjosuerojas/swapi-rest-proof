@@ -98,9 +98,9 @@ class UserController extends BaseController
 
             // Convert it to lowercase and replace any white space  
             $lowerdAndTrimmed = strtolower(str_replace(' ', '', $fullName));
-
+            
             // splitted into pieces
-            $splittedAndCount = array_count_values(str_split($lowerdAndTrimmed));
+            $splittedAndCount = array_count_values(str_split($lowerdAndTrimmed)); 
 
             // order the array
             arsort($splittedAndCount);
@@ -112,14 +112,13 @@ class UserController extends BaseController
             array_push($usersMostRepeatedLetter, [
                 $lowerdAndTrimmed => $mostRepeated
             ]);
-        }
-
+        } 
 
         return $this->getResponse([
             'message' => 'User retrieved successfully',
             'data' => [
-                'records' => count($users),
-                'most_repeated_letter' => $usersMostRepeatedLetter,
+                'records' => count($users), 
+                'repeated_letter' => $usersMostRepeatedLetter,
                 'info' => $users
             ],
         ]);
