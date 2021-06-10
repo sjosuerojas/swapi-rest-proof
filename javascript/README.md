@@ -15,44 +15,33 @@ npm install
 The quickest way to get started with the project API CDMSmith is creating a .env / .env.production file which contains configuration options and server options.
 
 ```
-touch .env.production
+touch .env
 ```
 
 In order to set the enviroment variables copy and paste these in the previous file.
 
 ```
-nano .env.production
+nano .env
 ---
 
-# Main app server
-APP_PORT=0000
-APP_ALLOW_DOMAINS="https://domain.com"
+# Application env variables [ info ]
+APP_PORT=5001
+APP_ALLOW_DOMAINS=http://localhost:3000
+API_EXTERNAL_URI=https://randomuser.me
+API_SWAPI_URI=https://swapi.dev/api
 
 # Application logger configuration
 APP_LOG_LEVEL=info
-APP_LOG_FILENAME=logs/cdmsmith-asset-management.log
+APP_LOG_FILENAME=logs/app.log
 APP_LOG_HANDLEEXCEPTIONS=true
 APP_LOG_JSON=true
 APP_LOG_MAXSIZE=5242880
-APP_LOG_MAXFILES=15
-APP_LOG_COLORIZE=true
+APP_LOG_MAXFILES=5
+APP_LOG_COLORIZE=false
 APP_CONSOLE_LOG_LEVEL=debug
 APP_CONSOLE_LOG_HANDLEEXCEPTIONS=true
 APP_CONSOLE_LOG_JSON=false
 APP_CONSOLE_LOG_COLORIZE=true
-
-# App JWT Security
-ACCESS_TOKEN_SECRET= # Generate a Key
-ACCESS_TOKEN_APIKEY= # Generate an apiKey
-
-# Database conection [ Cloud ] MYSQL  
-DB_HOST= # set the host of database
-DB_USER= # set the user of database
-DB_PASSWORD= # set the password of database
-DB_DATABASE= # set the database of database
-DB_PORT= # set the port of database
-DB_LIMIT= # set the limit of database
-DB_TIMEOUT= # set the timeout connection of database
 
 ```
 
@@ -78,16 +67,7 @@ npm start
 ```
 
 Enables the production mode which prevent the server to re-start
-
-### Test
-
-To run the test suite, first install the dependencies, then run `npm test`:
-
-```
-npm i
-npm test
-```
-
+ 
 ### Formating the code
 
 ```bash
