@@ -24,16 +24,14 @@ exports.verifyStatusServer = function (app) {
   switch (server.enviroment) {
     case 'development':
       console.log(
-        ` 
-
+        `  
         - Local: \x1b[36m%s\x1b[0m`,
-        `http://localhost:${app.get('onPort')}`
+        `http://localhost:${app.get('onPort')} \n`
       )
       break
     case 'production':
       console.log(
-        `  
-
+        `   
         - Production Mode on Port: \x1b[36m%s\x1b[0m`,
         `${app.get('onPort')}`
       )

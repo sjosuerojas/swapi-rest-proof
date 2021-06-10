@@ -1,12 +1,12 @@
+const express = require('express')
 /** Config options */
 const GlobalStatus = require('./utils/console')
 const GlobalState = require('./config/global.config')
-const express = require('express')
-
-/** Config global router */
-const Router = require('./routes')
+const Router = require('./routes/index')
 
 const app = express()
+
+/** Config global router */
 
 // Set the global state of the configuration server
 GlobalState.initConfig(app)

@@ -78,7 +78,7 @@ class UserController extends BaseController
             'message' => 'User retrieved successfully',
             'data' => [
                 'records' => count($user),
-                'age_greater_than' => $userAgeGraterThan,
+                'age' => $userAgeGraterThan,
                 'info' => $user[0]
             ],
         ]);
@@ -94,7 +94,7 @@ class UserController extends BaseController
         $usersMostRepeatedLetter = array();
 
         for ($i = 0; $i < count($users); $i++) {
-            $fullName = $users[$i]->name->title . $users[$i]->name->first . $users[$i]->name->last;
+            $fullName = $users[$i]->name->first . $users[$i]->name->last;
 
             // Convert it to lowercase and replace any white space  
             $lowerdAndTrimmed = strtolower(str_replace(' ', '', $fullName));

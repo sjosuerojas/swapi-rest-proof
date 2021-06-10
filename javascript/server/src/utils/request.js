@@ -1,22 +1,18 @@
-const https = require('https')
+const request = require('request')
 
-exports.request = function (url) {
+exports.requestClient = function (url, method = 'GET') {
   return new Promise((resolve, reject) => {
-    https
-      .get(url, (resp) => {
-        let data = ''
+    const options = {
+      method,
+      url,
+    }
 
-        // A chunk of data has been received.
-        resp.on('data', (chunk) => {
-          data += chunk
-        })
-
-        resp.on('end', () => {
-          resolve(JSON.parse(data))
-        })
-      })
-      .on('error', (err) => {
-        reject('Error request: ' + err.message)
-      })
+    request(options, function (error, response) {
+      if (error) reject('Request error: ' + error)
+      if (response) {
+        const res = response.body
+        resolve(JSON.parse(res))
+      }
+    })
   })
 }
