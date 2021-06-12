@@ -12,22 +12,26 @@ export const usersReducer = (state = initialState, action) => {
         case types.usersFetchAndOrder:
             return {
                 ...state,
-                usersByName: [...action.payload],
+                usersByName: action.payload,
             }
         case types.usersFetchAndFind:
             return {
                 ...state,
-                usersByAge: [...action.payload],
+                usersByAge: action.payload,
             }
         case types.usersFetchAndCount:
             return {
                 ...state,
-                usersByRepeatedWord: [...action.payload],
+                usersByRepeatedWord: action.payload,
             }
         case types.usersOnError:
             return {
                 ...state,
                 error: action.payload,
             }
+        case types.usersClearPreviousData:
+            return initialState
+        default:
+            return state
     }
 }

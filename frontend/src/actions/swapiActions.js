@@ -23,6 +23,10 @@ const swapiOnFetchFail = (err) => ({
     payload: err,
 })
 
+const usersClearState = () => ({
+    type: types.usersClearPreviousData,
+})
+
 /**
  * @alias action
  **/
@@ -41,6 +45,7 @@ export const startLoadingFastestShip = (passengers) => {
             if (body.statusOk) {
                 dispatch(setFastestShip(body.data))
                 dispatch(finishLoading())
+                dispatch(usersClearState())
             }
         } catch (error) {
             dispatch(swapiOnFetchFail(error))
@@ -66,6 +71,7 @@ export const startLoadingPlanetsTerrain = (terrain) => {
             if (body.statusOk) {
                 dispatch(setPlanetsTerrain(body.data))
                 dispatch(finishLoading())
+                dispatch(usersClearState())
             }
         } catch (error) {
             dispatch(swapiOnFetchFail(error))

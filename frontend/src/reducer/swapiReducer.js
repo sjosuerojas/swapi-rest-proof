@@ -2,8 +2,8 @@ import { types } from '../store/types'
 
 const initialState = {
     error: null,
-    fastest_ship: null,
-    planets_by_terrain: null,
+    fastesShip: null,
+    planetsByTerrain: null,
 }
 
 export const swapiReducer = (state = initialState, action) => {
@@ -11,17 +11,21 @@ export const swapiReducer = (state = initialState, action) => {
         case types.swapiGetFastestShip:
             return {
                 ...state,
-                fastest_ship: [...action.payload],
+                fastesShip: action.payload,
             }
         case types.swapiGetPlanetByTerrain:
             return {
                 ...state,
-                planets_by_terrain: [...action.payload],
+                planetsByTerrain: action.payload,
             }
         case types.swapiOnError:
             return {
                 ...state,
                 error: action.payload,
             }
+        case types.swapiClearPreviousData:
+            return initialState
+        default:
+            return state
     }
 }

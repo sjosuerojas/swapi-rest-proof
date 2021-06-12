@@ -15,7 +15,7 @@ exports.routesConfig = function (app) {
         UsersController.fetchAndOrder,
     ])
 
-    app.get('/api/user/get-age/:id', [
+    app.get('/api/users/get-age/:id', [
         VerifyAuth.validAPIKey,
         UsersController.fetchAndFind,
     ])

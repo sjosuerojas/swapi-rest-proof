@@ -28,6 +28,10 @@ const usersOnFetchFail = (err) => ({
     payload: err,
 })
 
+const swapiClearState = () => ({
+    type: types.swapiClearPreviousData,
+})
+
 /**
  * @alias action
  **/
@@ -37,19 +41,21 @@ export const startLoadingUsersByName = () => {
             dispatch(startLoading())
             const response = await fetchXAuthBasic(`${BASE_URL}/get-all`)
 
-            if (response.ok !== true)
+            if (response.ok !== true) {
                 dispatch(usersOnFetchFail('Error before fetching'))
+            }
 
             const body = await response.json()
             if (body.statusOk) {
                 dispatch(setUsersByName(body.data))
                 dispatch(finishLoading())
+                dispatch(swapiClearState())
             }
         } catch (error) {
-            dispatch(usersOnFetchFail(error))
+            dispatch(usersOnFetchFail(JSON.stringify(error)))
             useToast({
                 icon: 'error',
-                title: 'Lo sentimos, el servidor no pudo completar su peticion',
+                title: 'Lo sentimos, peticion fallo',
             })
         }
     }
@@ -68,9 +74,10 @@ export const startLoadingUsersByAge = (age) => {
             if (body.statusOk) {
                 dispatch(setUsersByAge(body.data))
                 dispatch(finishLoading())
+                dispatch(swapiClearState())
             }
         } catch (error) {
-            dispatch(usersOnFetchFail(error))
+            dispatch(usersOnFetchFail(JSON.stringify(error)))
             useToast({
                 icon: 'error',
                 title: 'Lo sentimos, el servidor no pudo completar su peticion',
@@ -94,9 +101,10 @@ export const startLoadingUsersByRepeatedWord = () => {
             if (body.statusOk) {
                 dispatch(setUsersByRepeatedWord(body.data))
                 dispatch(finishLoading())
+                dispatch(swapiClearState())
             }
         } catch (error) {
-            dispatch(usersOnFetchFail(error))
+            dispatch(usersOnFetchFail(JSON.stringify(error)))
             useToast({
                 position: 'bottom',
                 icon: 'error',

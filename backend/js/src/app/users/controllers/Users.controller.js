@@ -102,9 +102,11 @@ exports.fetchAndFind = async (req, res) => {
         res.json({
             statusOk: true,
             message: 'User retrieved successfully',
-            records: user.length,
-            age: userAgeGraterThan,
-            info: user,
+            data: {
+                records: user.length,
+                age: userAgeGraterThan,
+                info: user,
+            },
         })
     } catch (error) {
         console.error(error)
@@ -131,9 +133,11 @@ exports.fetchAndCount = async (req, res) => {
         res.json({
             statusOk: true,
             message: 'Users retrieved successfully',
-            records: users.length,
-            mostRepeatedLetter,
-            info: users,
+            data: {
+                records: users.length,
+                mostRepeatedLetter,
+                info: users,
+            },
         })
     } catch (error) {
         console.error(error)
