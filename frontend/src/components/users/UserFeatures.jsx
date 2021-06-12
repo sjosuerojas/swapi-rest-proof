@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { useDispatch } from 'react-redux'
+import { useForm } from '../../hooks/useForm'
 import {
     startLoadingUsersByAge,
     startLoadingUsersByName,
@@ -10,6 +11,8 @@ import SidebarMenuContext from '../../helpers/context'
 export const UserFeatures = () => {
     const dispatch = useDispatch()
     const { isMenuOpen, toggleMenu } = useContext(SidebarMenuContext)
+    const [formValues, setInputChange] = useForm({ ageinput: '' })
+    const { ageinput } = formValues
 
     const isEnableSidebar = () => isMenuOpen !== true && toggleMenu()
 
@@ -19,8 +22,10 @@ export const UserFeatures = () => {
     }
 
     const handlefetchAndFind = () => {
-        dispatch(startLoadingUsersByAge(10))
-        isEnableSidebar()
+        if (ageinput !== '') {
+            dispatch(startLoadingUsersByAge(ageinput))
+            isEnableSidebar()
+        }
     }
 
     const handlefetchAndCount = () => {
@@ -29,7 +34,7 @@ export const UserFeatures = () => {
     }
 
     return (
-        <section className="features section">
+        <section className="features section animate__animated animate__faster animate__bounceInLeft">
             <div className="container">
                 <div className="features-inner section-inner">
                     <div className="features-wrap">
@@ -126,6 +131,15 @@ export const UserFeatures = () => {
                                     Consulta una persona que tenga una edad
                                     mayor a la proporcionada
                                 </p>
+                                <input
+                                    id="ageinput"
+                                    className="custom-input"
+                                    name="ageinput"
+                                    placeholder="Edad"
+                                    type="text"
+                                    value={ageinput}
+                                    onChange={setInputChange}
+                                />
                                 <button
                                     className="button button-sm button-primary"
                                     onClick={handlefetchAndFind}

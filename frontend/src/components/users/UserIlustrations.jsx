@@ -2,7 +2,7 @@ import React from 'react'
 
 export const UserIlustrations = () => {
     return (
-        <div className="hero-illustration">
+        <div className="hero-illustration animate__animated animate__flipInX">
             <div className="hero-bg">
                 <svg
                     width="720"

@@ -10,7 +10,7 @@ export const SwapiContainer = () => {
                 <div className="container">
                     <div className="hero-inner">
                         <div className="hero-copy">
-                            <h1 className="hero-title mt-0 is-revealing">
+                            <h1 className="hero-title mt-0 is-revealing animate__animated animate__pulse animate__repeat-2">
                                 Swapi <br /> {'>'}
                                 <NavLink to="/" className="h3">
                                     Usuarios

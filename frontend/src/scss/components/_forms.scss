@@ -57,6 +57,35 @@
     }
 }
 
+.custom-input {
+    background-color: color(typography, 1);
+    border-width: 1px;
+    border-style: solid;
+    border-color: color(bg, 3);
+    color: color(typography, 2);
+    max-width: 40%;
+    width: 40%;
+    line-height: 20px;
+    padding: 13px 16px;
+	height: 34px;
+    box-shadow: none;
+    margin: 0.5rem 0.5rem;
+
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    @include font-size(7, mobile, true, false, true);
+    @if ( get-font-size(7, desktop) != get-font-size(7, mobile) ) {
+        @include media( '>medium' ) {
+            @include font-size(7, desktop, true, false, true);
+        }
+    }
+
+    .inline-input {
+        display: inline;
+        width: auto;
+    }
+}
+
 .textarea {
     display: block;
     min-width: 100%;

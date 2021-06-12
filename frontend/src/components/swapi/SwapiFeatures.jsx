@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { useDispatch } from 'react-redux'
+import { useForm } from '../../hooks/useForm'
 import {
     startLoadingFastestShip,
     startLoadingPlanetsTerrain,
@@ -9,21 +10,30 @@ import SidebarMenuContext from '../../helpers/context'
 export const SwapiFeatures = () => {
     const dispatch = useDispatch()
     const { isMenuOpen, toggleMenu } = useContext(SidebarMenuContext)
-
     const isEnableSidebar = () => isMenuOpen !== true && toggleMenu()
 
+    const [formValues, setInputChange] = useForm({
+        passengers: '',
+        terrain: '',
+    })
+    const { passengers, terrain } = formValues
+
     const handlegetFastestShip = () => {
-        dispatch(startLoadingFastestShip(100))
-        isEnableSidebar()
+        if (passengers !== '') {
+            dispatch(startLoadingFastestShip(passengers))
+            isEnableSidebar()
+        }
     }
 
     const handlegetPlanetByTerrain = () => {
-        dispatch(startLoadingPlanetsTerrain('ocean'))
-        isEnableSidebar()
+        if (terrain !== '') {
+            dispatch(startLoadingPlanetsTerrain(terrain))
+            isEnableSidebar()
+        }
     }
 
     return (
-        <section className="features section">
+        <section className="features section animate__animated animate__faster animate__bounceInLeft">
             <div className="container">
                 <div className="features-inner section-inner">
                     <div className="features-wrap">
@@ -77,11 +87,22 @@ export const SwapiFeatures = () => {
                                     Consulta la nave mas rapida partiendo de un
                                     numero de pasajeos ingresados
                                 </p>
+                                <input
+                                    id="passengers"
+                                    className="custom-input"
+                                    name="passengers"
+                                    placeholder="Pasajeros"
+                                    type="text"
+                                    value={passengers}
+                                    onChange={setInputChange}
+                                />
                                 <button
                                     className="button button-sm button-primary"
                                     type="button"
                                     onClick={handlegetFastestShip}
-                                >Consulta</button>
+                                >
+                                    Consulta
+                                </button>
                             </div>
                         </div>
                         <div className="feature">
@@ -117,11 +138,22 @@ export const SwapiFeatures = () => {
                                 <p className="text-sm mb-0">
                                     Consulta el planeta segun su tipo de terreno
                                 </p>
+                                <input
+                                    id="terrain"
+                                    className="custom-input"
+                                    name="terrain"
+                                    placeholder="Tipo de terreno"
+                                    type="text"
+                                    value={terrain}
+                                    onChange={setInputChange}
+                                />
                                 <button
                                     className="button button-sm button-primary"
                                     type="button"
                                     onClick={handlegetPlanetByTerrain}
-                                >Consulta</button>
+                                >
+                                    Consulta
+                                </button>
                             </div>
                         </div>
                     </div>
