@@ -1,7 +1,7 @@
 const baseUrl = process.env.API_URL
 const apiKey = process.env.ACCESS_TOKEN_APIKEY
 
-const fetchXAuthBasic = (endpoint, data, method = 'GET') => {
+export const fetchXAuthBasic = (endpoint, data, method = 'GET') => {
   const url = `${baseUrl}/${endpoint}`
 
   const headers = {

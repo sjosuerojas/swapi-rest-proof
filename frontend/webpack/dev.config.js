@@ -13,13 +13,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].js',
-    publicPath: 'http://localhost:4005/',
+    publicPath: 'http://localhost:3000/',
     chunkFilename: 'js/[id].[chunkhash].js',
   },
   devtool: 'source-map',
   devServer: {
     open: true,
-    port: 4005,
+    port: 3000,
     hot: true,
     overlay: { warnings: true, errors: true },
     watchContentBase: true,
@@ -66,12 +66,12 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-  },  
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html'),
-      favicon: path.resolve(__dirname, '../public/favicon.png'),
+      favicon: path.resolve(__dirname, '../public/favicon.ico'),
     }),
     new MiniCssExtractPlugin({
       filename: 'static/[name].[fullhash].css',

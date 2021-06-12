@@ -1,13 +1,14 @@
 const appRoot = require('app-root-path')
 require('dotenv-flow').config()
-  
+
 module.exports = {
   app: {
     port: process.env.APP_PORT,
     enviroment: process.env.NODE_ENV,
     allowListDomains: process.env.APP_ALLOW_DOMAINS,
     apiUsers: process.env.API_EXTERNAL_URI,
-    swapi: process.env.API_SWAPI_URI
+    swapi: process.env.API_SWAPI_URI,
+    apiKey: process.env.API_KEY
   },
   logger: {
     file: {
