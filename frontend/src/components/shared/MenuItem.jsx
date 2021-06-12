@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { checkProperties } from '../../helpers/objects'
+import emptyResults from '../../assets/images/none_search.svg'
 
 export const MenuItem = ({ users, swapi }) => {
     const { usersByName, usersByAge, usersByRepeatedWord } = users
@@ -9,6 +10,17 @@ export const MenuItem = ({ users, swapi }) => {
     return (
         <div className="menu-items">
             <a className="bm-item">Resultados:</a>
+
+            {checkProperties(users) && checkProperties(swapi) && (
+                <>
+                    <img
+                        src={emptyResults}
+                        className="w-50 m-auto pt-64"
+                        alt="no-results"
+                    />
+                    <h4 className="text-center">Sin resultados</h4>
+                </>
+            )}
 
             <ul className="mt-40">
                 {usersByName !== null &&
