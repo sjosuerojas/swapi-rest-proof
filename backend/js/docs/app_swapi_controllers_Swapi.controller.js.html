@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/swapi/controllers/Swapi.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/swapi/controllers/Swapi.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const client = require('../../../utils/request')
+const { app } = require('../../../config/env.config')
+
+/**
+ * @argument endpoint
+ * @description fetch swapi data, returning related data according to the movies
+ * @returns Promise&lt;request>
+ */
+const fetchApi = async function (endpoint = '?') {
+  try {
+    return await client.requestClient(`${app.swapi}/${endpoint}`)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument records
+ * @argument passengers
+ * @description return the specified object
+ * @returns array | string
+ */
+const specificationStartships = function (records, passengers) {
+  return records.map((ship) => {
+    // Validate time travel
+    const validTime = ['year', 'years', 'month', 'months', 'week', 'weeks']
+    const fuel = ship.consumables.split(' ')
+    const isValidTimeTravel = validTime.includes(fuel[1]) ? true : false
+
+    // Validate most speed reached
+    const isValidSpeedReached =
+      ship.max_atmosphering_speed !== 'n/a' ? true : false
+
+    // Validate number of passengers are correct
+    const isValidNoPass = ship.passengers >= passengers ? true : false
+
+    if (isValidTimeTravel &amp;&amp; isValidSpeedReached &amp;&amp; isValidNoPass) {
+      return {
+        name: ship.name,
+        passengers: ship.passengers,
+        min_time_travel: ship.consumables,
+        max_speed: ship.max_atmosphering_speed,
+      }
+    }
+  })
+}
+
+/**
+ * @argument records
+ * @argument terrain
+ * @description return the specified object
+ * @returns array | string
+ */
+const specificationPlanetsByTerrain = function (records, terrain) {
+  return records.map((planet) => {
+    // Validate terrain
+    const validTerrains = [
+      'grasslands',
+      'mountains',
+      'desert',
+      'jungle',
+      'rainforests',
+      'tundra',
+      'ice caves',
+      'mountain ranges',
+      'gas giant',
+      'forests',
+      'lakes',
+      'grassy hills',
+      'swamps',
+      'cityscape',
+      'ocean',
+    ]
+    const isValidTerrain = validTerrains.includes(terrain) ? true : false
+
+    // Validate population
+    const isValidPopulation = planet.population !== 'unknown' ? true : false
+
+    if (isValidTerrain &amp;&amp; isValidPopulation) {
+      return {
+        name: planet.terrain,
+        terrain: planet.terrain,
+        population: planet.population,
+      }
+    }
+  })
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description index
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.index = async (req, res) => {
+  try {
+    const response = await fetchApi()
+    res.status(200).json({
+      notice: 'Loading times in this API can be high due to its concurrency',  
+      message: 'Resources retrieved successfully',
+      data: response,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description getFastestShip
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.getFastestShip = async (req, res) => {
+  try {
+    const params = req.params
+    const response = await fetchApi('starships')
+    const startships = specificationStartships(response.results, params.id)
+
+    res.status(200).json({
+      notice: 'Loading times in this API can be high due to its concurrency',  
+      message: 'Resources retrieved successfully',
+      data: startships.filter((ship) => ship),
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description getPlanetByTerrain
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.getPlanetByTerrain = async (req, res) => {
+  try {
+    const params = req.params
+    const response = await fetchApi('planets')
+
+    const planets = specificationPlanetsByTerrain(response.results, params.id)
+
+    res.status(200).json({
+      notice: 'Loading times in this API can be high due to its concurrency',  
+      message: 'Resources retrieved successfully',
+      data: planets.filter((planet) => planet),
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#fetchAndCount">fetchAndCount</a></li><li><a href="global.html#fetchAndFind">fetchAndFind</a></li><li><a href="global.html#fetchAndOrder">fetchAndOrder</a></li><li><a href="global.html#fetchApi">fetchApi</a></li><li><a href="global.html#findLetterMostRepeated">findLetterMostRepeated</a></li><li><a href="global.html#getFastestShip">getFastestShip</a></li><li><a href="global.html#getPlanetByTerrain">getPlanetByTerrain</a></li><li><a href="global.html#GlobalStatus">GlobalStatus</a></li><li><a href="global.html#index">index</a></li><li><a href="global.html#initConfig">initConfig</a></li><li><a href="global.html#isValidSchemaModel">isValidSchemaModel</a></li><li><a href="global.html#routesConfig">routesConfig</a></li><li><a href="global.html#specificationPlanetsByTerrain">specificationPlanetsByTerrain</a></li><li><a href="global.html#specificationStartships">specificationStartships</a></li><li><a href="global.html#users-routes">users-routes</a></li><li><a href="global.html#welcome-routes">welcome-routes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jun 11 2021 21:14:30 GMT-0500 (Colombia Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

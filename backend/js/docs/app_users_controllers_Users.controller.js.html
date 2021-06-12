@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/users/controllers/Users.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/users/controllers/Users.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const client = require('../../../utils/request')
+const { app } = require('../../../config/env.config')
+
+/**
+ * @argument defaultUsers
+ * @description fetch random users api, returning random data according to the users profile
+ * @returns Promise&lt;request>
+ */
+const fetchApi = async function (defaultUsers = 10) {
+  try {
+    const uri = `${app.apiUsers}/api/?results=${defaultUsers}`
+    const { results } = await client.requestClient(uri)
+    return results
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument fullName
+ * @description finds the most repeated letter in a phrase
+ * @returns Array
+ */
+const findLetterMostRepeated = function (fullName) {
+  let loweredName = fullName.toLowerCase()
+  let splitted = loweredName.split('')
+  let reducedName = splitted.reduce((acc, el) => {
+    if (acc[el]) {
+      acc[el]++
+    } else {
+      acc[el] = 1
+    }
+
+    return acc
+  }, {})
+
+  return Object.entries(reducedName).reduce((acc, el) =>
+    acc[1] > el[1] ? acc : el
+  )
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description getUserList
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.index = async (req, res) => {
+  try {
+    const response = await fetchApi(25)
+    res.status(200).json({
+      message: 'Users retrieved successfully',
+      data: response,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description fetchAndOrder
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.fetchAndOrder = async (req, res) => {
+  try {
+    const users = await fetchApi(10)
+    const filterByName = users.map((item) => item.name.first)
+
+    res.status(200).json({
+      message: 'Users retrieved successfully',
+      data: {
+        records: users.length,
+        filterByName,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description fetchAndFind
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.fetchAndFind = async (req, res) => {
+  try {
+    const params = req.params
+    const user = await fetchApi(1)
+    const { dob: dateOfBirth } = Object.assign({}, ...user)
+
+    const userAgeGraterThan =
+      dateOfBirth.age > params.id
+        ? dateOfBirth.age
+        : 'Age is not greater than the given one!'
+
+    res.json({
+      message: 'User retrieved successfully',
+      records: user.length,
+      age: userAgeGraterThan,
+      info: user,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+/**
+ * @argument req
+ * @argument res
+ * @description fetchAndCount
+ * @returns Promise&lt;obj> data | &lt;obj> err
+ */
+exports.fetchAndCount = async (req, res) => {
+  try {
+    const users = await fetchApi(5)
+    const mostRepeatedLetter = []
+
+    for (const user of users) {
+      let fullName = user.name.first + user.name.last
+      const repetedLetters = findLetterMostRepeated(fullName)
+      mostRepeatedLetter.push(repetedLetters)
+    } 
+
+    res.json({
+      message: 'Users retrieved successfully',
+      records: users.length,
+      mostRepeatedLetter,
+      info: users,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#fetchAndCount">fetchAndCount</a></li><li><a href="global.html#fetchAndFind">fetchAndFind</a></li><li><a href="global.html#fetchAndOrder">fetchAndOrder</a></li><li><a href="global.html#fetchApi">fetchApi</a></li><li><a href="global.html#findLetterMostRepeated">findLetterMostRepeated</a></li><li><a href="global.html#getFastestShip">getFastestShip</a></li><li><a href="global.html#getPlanetByTerrain">getPlanetByTerrain</a></li><li><a href="global.html#GlobalStatus">GlobalStatus</a></li><li><a href="global.html#index">index</a></li><li><a href="global.html#initConfig">initConfig</a></li><li><a href="global.html#isValidSchemaModel">isValidSchemaModel</a></li><li><a href="global.html#routesConfig">routesConfig</a></li><li><a href="global.html#specificationPlanetsByTerrain">specificationPlanetsByTerrain</a></li><li><a href="global.html#specificationStartships">specificationStartships</a></li><li><a href="global.html#users-routes">users-routes</a></li><li><a href="global.html#welcome-routes">welcome-routes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Jun 11 2021 21:14:29 GMT-0500 (Colombia Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
