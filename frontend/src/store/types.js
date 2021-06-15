@@ -1,6 +1,8 @@
 export const types = {
+    uiCheckServerLiveness: '[UI] Checking server liveness',
     uiStartLoading: '[UI] Start loading',
     uiFinishLoading: '[UI] Finish loading',
+    uiOnError: '[UI] Error while fetching users',
 
     usersFetchAndOrder: '[Users] Load users and order by name',
     usersFetchAndFind: '[Users] Load users and search for the age specified',

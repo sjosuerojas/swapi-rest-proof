@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\Response;
 class UserController extends BaseController
 {
 
-    /** 
+    /**
      * @return JSON<Response>
      */
     public function index()
@@ -15,6 +15,7 @@ class UserController extends BaseController
         $users = $this->fetchApi(25);
 
         return $this->getResponse([
+            'statusOk' => true,
             'message' => 'Users retrieved successfully',
             'data' => [
                 'records' => count($users),
@@ -34,7 +35,7 @@ class UserController extends BaseController
         // getting from the env configuration api url for security reasons
         $uri = getenv('API_EXTERNAL_URI') . '/api/?results=' . $default_users;
 
-        // stablishing the method and uri request   
+        // stablishing the method and uri request
         $response = $client->request('GET', $uri);
 
         // asigning the body request random call to @var users
@@ -43,7 +44,7 @@ class UserController extends BaseController
         return $users->results;
     }
 
-    /** 
+    /**
      * @return JSON<Response>
      */
     public function fetchAndOrder()
@@ -57,6 +58,7 @@ class UserController extends BaseController
         }
 
         return $this->getResponse([
+            'statusOk' => true,
             'message' => 'Users retrieved successfully',
             'data' => [
                 'records' => count($users),
@@ -65,7 +67,7 @@ class UserController extends BaseController
         ]);
     }
 
-    /** 
+    /**
      * @return JSON<Response>
      */
     public function fetchAndFind($ageDefault)
@@ -75,6 +77,7 @@ class UserController extends BaseController
         $userAgeGraterThan = $user[0]->dob->age > $ageDefault ? $user[0]->dob->age : 'Age is not greater than the given one!';
 
         return $this->getResponse([
+            'statusOk' => true,
             'message' => 'User retrieved successfully',
             'data' => [
                 'records' => count($user),
@@ -96,11 +99,11 @@ class UserController extends BaseController
         for ($i = 0; $i < count($users); $i++) {
             $fullName = $users[$i]->name->first . $users[$i]->name->last;
 
-            // Convert it to lowercase and replace any white space  
+            // Convert it to lowercase and replace any white space
             $lowerdAndTrimmed = strtolower(str_replace(' ', '', $fullName));
-            
+
             // splitted into pieces
-            $splittedAndCount = array_count_values(str_split($lowerdAndTrimmed)); 
+            $splittedAndCount = array_count_values(str_split($lowerdAndTrimmed));
 
             // order the array
             arsort($splittedAndCount);
@@ -112,12 +115,13 @@ class UserController extends BaseController
             array_push($usersMostRepeatedLetter, [
                 $lowerdAndTrimmed => $mostRepeated
             ]);
-        } 
+        }
 
         return $this->getResponse([
+            'statusOk' => true,
             'message' => 'User retrieved successfully',
             'data' => [
-                'records' => count($users), 
+                'records' => count($users),
                 'repeated_letter' => $usersMostRepeatedLetter,
                 'info' => $users
             ],

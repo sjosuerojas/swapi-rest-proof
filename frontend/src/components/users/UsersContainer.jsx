@@ -29,7 +29,7 @@ export const UsersContainer = () => {
                                 <div className="control">
                                     <button
                                         className="button button-primary button-block"
-                                        href="#"
+
                                     >
                                         Cambiar API
                                     </button>

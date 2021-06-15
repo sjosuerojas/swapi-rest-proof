@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Libraries\CodeIgniterCORS\CodeIgniterCORS;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -23,69 +22,64 @@ use Psr\Log\LoggerInterface;
 
 class BaseController extends Controller
 {
-	/**
-	 * Instance of the main Request object.
-	 *
-	 * @var IncomingRequest|CLIRequest
-	 */
-	protected $request;
+    /**
+     * Instance of the main Request object.
+     *
+     * @var IncomingRequest|CLIRequest
+     */
+    protected $request;
 
-	/**
-	 * An array of helpers to be loaded automatically upon
-	 * class instantiation. These helpers will be available
-	 * to all other controllers that extend BaseController.
-	 *
-	 * @var array
-	 */
-	protected $helpers = [];
+    /**
+     * An array of helpers to be loaded automatically upon
+     * class instantiation. These helpers will be available
+     * to all other controllers that extend BaseController.
+     *
+     * @var array
+     */
+    protected $helpers = [];
 
-	/**
-	 * Constructor.
-	 *
-	 * @param RequestInterface  $request
-	 * @param ResponseInterface $response
-	 * @param LoggerInterface   $logger
-	 */
-	public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-	{
-		// Do Not Edit This Line
-		parent::initController($request, $response, $logger);
+    /**
+     * Constructor.
+     *
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
+     * @param LoggerInterface   $logger
+     */
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        // Do Not Edit This Line
+        parent::initController($request, $response, $logger);
+    }
 
-		if (!is_cli()) {
-			$this->_cors();
-		}
-	}
+    public function welcome()
+    {
+        return $this->getResponse([
+            'statusOk' => true,
+            'status_message' => 'Server is runnig...',
+            'status_info' => [
+                'activity' => date("Y/m/d"),
+                'status_code' => 200
+            ]
+        ]);
+    }
 
-	private function _cors(): void
-	{
-		if (
-			empty($_SERVER['HTTP_X_REQUESTED_WITH']) ||
-			(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-				(strtoupper($_SERVER['HTTP_X_REQUESTED_WITH']) === 'XMLHTTPREQUEST'))
-		) {
-			// Use CI headers management and send headers 
-			$ciCORS = new CodeIgniterCORS();
-			$ciCORS->handle($this->request, $this->response);
-		}
-	}
+    public function getResponse(
+        array $responseBody,
+        int $code = ResponseInterface::HTTP_OK
+    ) {
+        return $this
+            ->response
+            ->setStatusCode($code)
+            ->setJSON($responseBody);
+    }
 
-	public function getResponse(
-		array $responseBody,
-		int $code = ResponseInterface::HTTP_OK
-	) {
-		return $this
-			->response
-			->setStatusCode($code)
-			->setJSON($responseBody);
-	}
-
-	public function getRequestInput(IncomingRequest $request)
-	{
-		$input = $request->getPost();
-		if (empty($input)) {
-			//convert request body to associative array
-			$input = json_decode($request->getBody(), true);
-		}
-		return $input;
-	}
+    public function getRequestInput(IncomingRequest $request)
+    {
+        $input = $request->getPost();
+        if (empty($input)) {
+            //convert request body to associative array
+            $input = json_decode($request->getBody(), true);
+        }
+        return $input;
+    }
 }

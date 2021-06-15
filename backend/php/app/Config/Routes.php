@@ -56,11 +56,10 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
  * --------------------------------------------------------------------
  * Custom Routes
  * --------------------------------------------------------------------
- * 
+ *
  */
 
-$routes->options('(:any)', 'BaseController::cors');
-
+$routes->get('api/welcome', 'BaseController::welcome');
 $routes->get('api/users/get-all', 'UserController::fetchAndOrder');
 $routes->get('api/user/get-age/(:num)', 'UserController::fetchAndFind/$1');
 $routes->get('api/users/get-repeated-letter', 'UserController::fetchAndCount');
